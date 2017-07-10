@@ -132,6 +132,7 @@ public class TreeItemNode extends TreeItem<File> {
     private void setIcon(File file) {
         if (file.getParent() == null && !file.getName().equals(hostname)) {
             this.setGraphic(new ImageView("/icons/icoHDD.png"));
+            this.getGraphic().setMouseTransparent(true);
         } else if (!file.getName().equals(hostname)) {
             if (directory) {
                 setGraphic(new ImageView("/icons/icoFolderClosed.png"));
