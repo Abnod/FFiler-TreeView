@@ -1,17 +1,11 @@
 package ru.abnod.ffilertree.model;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
 import javax.swing.filechooser.FileSystemView;
 import java.awt.image.BufferedImage;
@@ -25,7 +19,7 @@ import static ru.abnod.ffilertree.controller.Controller.hostname;
 
 public class TreeItemNode extends TreeItem<File> {
     private static FileSystemView view = FileSystemView.getFileSystemView();
-    private static HashMap<String, Image> mapOfFileExtToSmallIcon = new HashMap<String, Image>();
+    private static HashMap<String, Image> mapOfFileExtToSmallIcon = new HashMap<>();
     private boolean childrenLoaded = false;
     private boolean directory;
 
@@ -95,14 +89,11 @@ public class TreeItemNode extends TreeItem<File> {
 
     @Override
     public boolean isLeaf() {
-        if (childrenLoaded) {
-            return getChildren().isEmpty();
-        }
-        return false;
+        return childrenLoaded && getChildren().isEmpty();
     }
 
-    @Override
     public ObservableList<TreeItem<File>> getChildren() {
+        System.out.println(3);
         if (childrenLoaded) {
             return super.getChildren();
         }
@@ -120,13 +111,13 @@ public class TreeItemNode extends TreeItem<File> {
             super.getChildren().add(null);
             super.getChildren().clear();
         }
+        System.out.println(4);
         return super.getChildren();
     }
 
     private void setIcon(File file) {
         if (file.getParent() == null && !file.getName().equals(hostname)) {
             this.setGraphic(new ImageView("/icoHDD.png"));
-            return;
         } else if (!file.getName().equals(hostname)) {
             if (directory) {
                 setGraphic(new ImageView("/icoFolderClosed.png"));
@@ -138,14 +129,25 @@ public class TreeItemNode extends TreeItem<File> {
         }
     }
 
-    private void test(){
+    private void test() {
         this.expandedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue){setGraphic(new ImageView("/icoFolderOpen.png"));
-            } else {setGraphic(new ImageView("/icoFolderClosed.png"));}
+            if (newValue) {
+                new Thread(() -> {
+                    setGraphic(new ImageView("/update.png"));
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    setGraphic(new ImageView("/icoFolderOpen.png"));
+                }).start();
+            } else {
+                setGraphic(new ImageView("/icoFolderClosed.png"));
+            }
         });
     }
 
-    public void update(){
+    public void update() {
         if (childrenLoaded) childrenLoaded = false;
         super.getChildren().clear();
         getChildren();

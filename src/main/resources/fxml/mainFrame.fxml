@@ -14,98 +14,130 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.abnod.ffilertree.controller.Controller">
-   <children>
-      <AnchorPane maxHeight="85.0" minHeight="85.0" prefHeight="85.0" VBox.vgrow="NEVER">
-         <children>
-            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <MenuBar maxHeight="25.0" minHeight="25.0" prefHeight="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="NEVER">
-                    <menus>
-                      <Menu mnemonicParsing="false" text="File">
-                        <items>
-                          <MenuItem mnemonicParsing="false" onAction="#closeProgram" text="Close" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Help">
-                        <items>
-                          <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
-                        </items>
-                      </Menu>
-                    </menus>
-                  </MenuBar>
-                  <AnchorPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" VBox.vgrow="NEVER">
-                     <children>
-                        <ToolBar maxHeight="30.0" minHeight="30.0" prefHeight="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                      <Button maxHeight="24.0" maxWidth="75.0" minHeight="24.0" minWidth="75.0" mnemonicParsing="false" onAction="#itemCreate" prefHeight="24.0" prefWidth="75.0" text="Create" textAlignment="CENTER" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="3.0" />
-                        <TextField fx:id="newItemInput" maxHeight="24.0" minHeight="24.0" prefHeight="24.0" promptText="Input new folder or file name here" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" />
-                     </children>
-                  </AnchorPane>
-                  <ToolBar maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-                    <items>
-                        <Button fx:id="buttonCopy" maxHeight="24.0" maxWidth="75.0" minHeight="24.0" minWidth="75.0" mnemonicParsing="false" onAction="#itemCopy" prefHeight="24.0" prefWidth="75.0" text="Copy" />
-                        <Button fx:id="buttonCut" layoutX="10.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0" minHeight="24.0" minWidth="75.0" mnemonicParsing="false" onAction="#itemCut" prefHeight="24.0" prefWidth="75.0" text="Cut" />
-                        <Button layoutX="74.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0" minHeight="24.0" minWidth="75.0" mnemonicParsing="false" onAction="#itemPaste" prefHeight="24.0" prefWidth="75.0" text="Paste">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../paste.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></Button>
-                        <Button layoutX="74.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0" minHeight="24.0" minWidth="75.0" mnemonicParsing="false" onAction="#itemDelete" prefHeight="24.0" prefWidth="75.0" text="Delete">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../trash.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></Button>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Button layoutX="202.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0" minHeight="24.0" minWidth="75.0" mnemonicParsing="false" onAction="#update" prefHeight="24.0" prefWidth="75.0" text="Update">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../update.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Separator layoutX="326.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
-                        <Label fx:id="copyIndicatorLabel" text="Copy/Move active operations: " visible="false">
-                           <graphic>
-                              <ProgressIndicator maxHeight="16.0" maxWidth="16.0" minHeight="16.0" minWidth="16.0" prefHeight="16.0" prefWidth="16.0" />
-                           </graphic>
-                        </Label>
-                        <Label fx:id="copyCountLabel" text="0" visible="false" />
-                    </items>
-                  </ToolBar>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane minHeight="200.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-         <children>
-            <TreeTableView fx:id="treeTableView" onMousePressed="#launchFile" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <columns>
-                <TreeTableColumn fx:id="columnName" minWidth="150.0" prefWidth="470.0" />
-                <TreeTableColumn fx:id="columnDate" editable="false" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" resizable="false" sortable="false" text="Last Modified" />
-                  <TreeTableColumn fx:id="columnSize" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" resizable="false" sortable="false" text="Size" />
-              </columns>
-            </TreeTableView>
-         </children>
-      </AnchorPane>
-      <AnchorPane maxHeight="20.0" minHeight="20.0" prefHeight="20.0" VBox.vgrow="NEVER">
-         <children>
-            <Label focusTraversable="false" mouseTransparent="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-         </children>
-      </AnchorPane>
-   </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="600.0"
+      prefWidth="800.0" xmlns="http://javafx.com/javafx/8"
+      fx:controller="ru.abnod.ffilertree.controller.Controller">
+    <children>
+        <AnchorPane maxHeight="85.0" minHeight="85.0" prefHeight="85.0" VBox.vgrow="NEVER">
+            <children>
+                <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                      AnchorPane.topAnchor="0.0">
+                    <children>
+                        <MenuBar maxHeight="25.0" minHeight="25.0" prefHeight="25.0" AnchorPane.bottomAnchor="0.0"
+                                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                                 VBox.vgrow="NEVER">
+                            <menus>
+                                <Menu mnemonicParsing="false" text="File">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#closeProgram" text="Close"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Help">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About"/>
+                                    </items>
+                                </Menu>
+                            </menus>
+                        </MenuBar>
+                        <AnchorPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" VBox.vgrow="NEVER">
+                            <children>
+                                <ToolBar maxHeight="30.0" minHeight="30.0" prefHeight="30.0"
+                                         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                <Button maxHeight="24.0" maxWidth="75.0" minHeight="24.0" minWidth="75.0"
+                                        mnemonicParsing="false" onAction="#itemCreate" prefHeight="24.0"
+                                        prefWidth="75.0" text="Create" textAlignment="CENTER"
+                                        AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="6.0"
+                                        AnchorPane.topAnchor="3.0"/>
+                                <TextField fx:id="newItemInput" maxHeight="24.0" minHeight="24.0" prefHeight="24.0"
+                                           promptText="Input new folder or file name here" AnchorPane.bottomAnchor="3.0"
+                                           AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="5.0"
+                                           AnchorPane.topAnchor="3.0"/>
+                            </children>
+                        </AnchorPane>
+                        <ToolBar maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                            <items>
+                                <Button fx:id="buttonCopy" maxHeight="24.0" maxWidth="75.0" minHeight="24.0"
+                                        minWidth="75.0" mnemonicParsing="false" onAction="#itemCopy" prefHeight="24.0"
+                                        prefWidth="75.0" text="Copy"/>
+                                <Button fx:id="buttonCut" layoutX="10.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0"
+                                        minHeight="24.0" minWidth="75.0" mnemonicParsing="false" onAction="#itemCut"
+                                        prefHeight="24.0" prefWidth="75.0" text="Cut"/>
+                                <Button layoutX="74.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0" minHeight="24.0"
+                                        minWidth="75.0" mnemonicParsing="false" onAction="#itemPaste" prefHeight="24.0"
+                                        prefWidth="75.0" text="Paste">
+                                    <graphic>
+                                        <ImageView>
+                                            <image>
+                                                <Image url="@../paste.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button layoutX="74.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0" minHeight="24.0"
+                                        minWidth="75.0" mnemonicParsing="false" onAction="#itemDelete" prefHeight="24.0"
+                                        prefWidth="75.0" text="Delete">
+                                    <graphic>
+                                        <ImageView>
+                                            <image>
+                                                <Image url="@../trash.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Separator orientation="VERTICAL" prefHeight="200.0"/>
+                                <Button layoutX="202.0" layoutY="8.0" maxHeight="24.0" maxWidth="75.0" minHeight="24.0"
+                                        minWidth="75.0" mnemonicParsing="false" onAction="#update" prefHeight="24.0"
+                                        prefWidth="75.0" text="Update">
+                                    <graphic>
+                                        <ImageView>
+                                            <image>
+                                                <Image url="@../update.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Separator layoutX="326.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0"/>
+                                <Label fx:id="copyIndicatorLabel" text="Copy/Move active operations: " visible="false">
+                                    <graphic>
+                                        <ProgressIndicator maxHeight="16.0" maxWidth="16.0" minHeight="16.0"
+                                                           minWidth="16.0" prefHeight="16.0" prefWidth="16.0"/>
+                                    </graphic>
+                                </Label>
+                                <Label fx:id="copyCountLabel" text="0" visible="false"/>
+                            </items>
+                        </ToolBar>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane minHeight="200.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <children>
+                <TreeTableView fx:id="treeTableView" onMousePressed="#launchFile" prefHeight="200.0" prefWidth="200.0"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                               AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TreeTableColumn fx:id="columnName" minWidth="150.0" prefWidth="470.0"/>
+                        <TreeTableColumn fx:id="columnDate" editable="false" maxWidth="180.0" minWidth="180.0"
+                                         prefWidth="180.0" resizable="false" sortable="false" text="Last Modified"/>
+                        <TreeTableColumn fx:id="columnSize" editable="false" maxWidth="150.0" minWidth="150.0"
+                                         prefWidth="150.0" resizable="false" sortable="false" text="Size"/>
+                    </columns>
+                </TreeTableView>
+            </children>
+        </AnchorPane>
+        <AnchorPane maxHeight="20.0" minHeight="20.0" prefHeight="20.0" VBox.vgrow="NEVER">
+            <children>
+                <Label focusTraversable="false" mouseTransparent="true" AnchorPane.bottomAnchor="3.0"
+                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                    <padding>
+                        <Insets left="20.0"/>
+                    </padding>
+                </Label>
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>
