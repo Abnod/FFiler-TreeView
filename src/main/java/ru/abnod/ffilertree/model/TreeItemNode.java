@@ -135,6 +135,7 @@ public class TreeItemNode extends TreeItem<File> {
         } else if (!file.getName().equals(hostname)) {
             if (directory) {
                 setGraphic(new ImageView("/icons/icoFolderClosed.png"));
+                this.getGraphic().setMouseTransparent(true);
                 test();
             } else {
                 Image fxImage = getFileIcon(file.getName());
@@ -157,9 +158,11 @@ public class TreeItemNode extends TreeItem<File> {
                         }
                     }
                     setGraphic(new ImageView("/icons/icoFolderOpen.png"));
+                    this.getGraphic().setMouseTransparent(true);
                 }).start();
             } else {
                 setGraphic(new ImageView("/icons/icoFolderClosed.png"));
+                this.getGraphic().setMouseTransparent(true);
             }
         });
     }
