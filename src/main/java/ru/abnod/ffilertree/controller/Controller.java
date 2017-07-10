@@ -150,11 +150,11 @@ public class Controller {
 
     public void itemCreate() {
         TreeItem<File> temp = treeTableView.getSelectionModel().getSelectedItem();
-        if (temp != null) {
+        if (temp != null && temp.getValue().isDirectory()) {
             File parentPrefix = temp.getValue();
             if (!treeTableView.getSelectionModel().getSelectedItem().getValue().getName().equals(hostname)) {
                 String newName = newItemInput.getText();
-                Pattern pattern = Pattern.compile("[\\?\\\"\\\\\\/:\\*<>\\|]");
+                Pattern pattern = Pattern.compile("[\\?\\\"\\\\\\/:\\*<>\\|]"); //проверка на содержание символов запрещенных в windows при создании папок и файлов.
                 Matcher matcher = pattern.matcher(newName);
                 if ((!newName.equals("")) && !(matcher.find())) {
                     String newItemName = parentPrefix + File.separator + newName;
