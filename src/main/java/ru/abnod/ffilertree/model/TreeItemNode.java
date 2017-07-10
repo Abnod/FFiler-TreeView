@@ -22,6 +22,7 @@ public class TreeItemNode extends TreeItem<File> {
     private static HashMap<String, Image> mapOfFileExtToSmallIcon = new HashMap<>();
     private boolean childrenLoaded = false;
     private boolean directory;
+    private boolean firstLoad;
 
     public TreeItemNode(File value) {
         super(value);
@@ -93,7 +94,6 @@ public class TreeItemNode extends TreeItem<File> {
     }
 
     public ObservableList<TreeItem<File>> getChildren() {
-        System.out.println(3);
         if (childrenLoaded) {
             return super.getChildren();
         }
@@ -102,25 +102,39 @@ public class TreeItemNode extends TreeItem<File> {
 
         File[] list = getValue().listFiles();
         if (list != null) {
+            firstLoad = true;
             List<TreeItem<File>> children = new ArrayList<>();
-            for (File file : list) {
-                children.add(new TreeItemNode(file));
-            }
+            children.add(new TreeItemNode(new File(File.separator + "loading"), new ImageView("/icons/update.png")));
             super.getChildren().addAll(children);
+            new Thread(() -> getChildrenAlternate(children, list)).start();
         } else {
             super.getChildren().add(null);
             super.getChildren().clear();
         }
-        System.out.println(4);
         return super.getChildren();
+    }
+
+    public void getChildrenAlternate(List<TreeItem<File>> input, File[] files) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        input.clear();
+        for (File file : files) {
+            input.add(new TreeItemNode(file));
+        }
+        super.getChildren().clear();
+        super.getChildren().addAll(input);
     }
 
     private void setIcon(File file) {
         if (file.getParent() == null && !file.getName().equals(hostname)) {
-            this.setGraphic(new ImageView("/icoHDD.png"));
+            this.setGraphic(new ImageView("/icons/icoHDD.png"));
         } else if (!file.getName().equals(hostname)) {
             if (directory) {
-                setGraphic(new ImageView("/icoFolderClosed.png"));
+                setGraphic(new ImageView("/icons/icoFolderClosed.png"));
                 test();
             } else {
                 Image fxImage = getFileIcon(file.getName());
@@ -133,16 +147,19 @@ public class TreeItemNode extends TreeItem<File> {
         this.expandedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 new Thread(() -> {
-                    setGraphic(new ImageView("/update.png"));
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if (firstLoad) {
+                        setGraphic(new ImageView("/icons/update.png"));
+                        firstLoad = false;
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    setGraphic(new ImageView("/icoFolderOpen.png"));
+                    setGraphic(new ImageView("/icons/icoFolderOpen.png"));
                 }).start();
             } else {
-                setGraphic(new ImageView("/icoFolderClosed.png"));
+                setGraphic(new ImageView("/icons/icoFolderClosed.png"));
             }
         });
     }
@@ -152,4 +169,5 @@ public class TreeItemNode extends TreeItem<File> {
         super.getChildren().clear();
         getChildren();
     }
+
 }

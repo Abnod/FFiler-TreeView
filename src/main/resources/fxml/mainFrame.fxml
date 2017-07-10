@@ -69,7 +69,7 @@
                                     <graphic>
                                         <ImageView>
                                             <image>
-                                                <Image url="@../paste.png"/>
+                                                <Image url="@../icons/paste.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -80,7 +80,7 @@
                                     <graphic>
                                         <ImageView>
                                             <image>
-                                                <Image url="@../trash.png"/>
+                                                <Image url="@../icons/trash.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -92,7 +92,7 @@
                                     <graphic>
                                         <ImageView>
                                             <image>
-                                                <Image url="@../update.png"/>
+                                                <Image url="@../icons/update.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>

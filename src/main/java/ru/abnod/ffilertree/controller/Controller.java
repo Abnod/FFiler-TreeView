@@ -41,10 +41,10 @@ public class Controller {
     private static TreeItem<File> copyLink;
     private static TreeItem<File> cutLink;
     private static boolean override = false;
-    private static ImageView ledInactiveCopy = new ImageView("/Ledgrey.svg-10.png");
-    private static ImageView ledInactiveCut = new ImageView("/Ledgrey.svg-10.png");
-    private static ImageView ledActiveCopy = new ImageView("/Ledgreen.svg-10.png");
-    private static ImageView ledActiveCut = new ImageView("/Ledgreen.svg-10.png");
+    private static ImageView ledInactiveCopy = new ImageView("/icons/Ledgrey.svg-10.png");
+    private static ImageView ledInactiveCut = new ImageView("/icons/Ledgrey.svg-10.png");
+    private static ImageView ledActiveCopy = new ImageView("/icons/Ledgreen.svg-10.png");
+    private static ImageView ledActiveCut = new ImageView("/icons/Ledgreen.svg-10.png");
     private static AtomicInteger counter = new AtomicInteger(0);
 
 
@@ -79,7 +79,7 @@ public class Controller {
             System.out.println("host unknown");
         }
 
-        TreeItemNode root = new TreeItemNode(new File(hostname), new ImageView("/icoPC.png"));
+        TreeItemNode root = new TreeItemNode(new File(hostname), new ImageView("/icons/icoPC.png"));
         root.setExpanded(true);
 
         addChildrens(root, File.listRoots());
@@ -196,7 +196,6 @@ public class Controller {
 
     public void itemPaste() {
         TreeItem<File> destination = treeTableView.getSelectionModel().getSelectedItem();
-        System.out.println(destination.getValue().toString());
         if (destination != null && copyLink != null) {
             if (!destination.getValue().getAbsolutePath().equals(copyLink.getParent().getValue().getAbsolutePath())) {
                 promptShow("Confirm Copying", "Prepare to copy from " + copyLink.getValue() + " to " + destination.getValue(),
@@ -270,7 +269,6 @@ public class Controller {
             Platform.runLater(() -> alertShow("Copy Error", null, "Some files were not copied...", Alert.AlertType.ERROR));
         }
         Platform.runLater(() -> setCopyProcessLabel(-1));
-        System.out.println("copy end");
     }
 
     public void itemDelete() {
@@ -360,9 +358,9 @@ public class Controller {
     private void createContextMenu() {
         MenuItem cutMenu = new MenuItem("Cut");
         MenuItem copyMenu = new MenuItem("Copy");
-        MenuItem pasteMenu = new MenuItem("Paste", new ImageView("/paste.png"));
-        MenuItem deleteMenu = new MenuItem("Delete", new ImageView("/trash.png"));
-        MenuItem updateMenu = new MenuItem("Update", new ImageView("/update.png"));
+        MenuItem pasteMenu = new MenuItem("Paste", new ImageView("/icons/paste.png"));
+        MenuItem deleteMenu = new MenuItem("Delete", new ImageView("/icons/trash.png"));
+        MenuItem updateMenu = new MenuItem("Update", new ImageView("/icons/update.png"));
 
         cutMenu.setOnAction(t -> itemCut());
         copyMenu.setOnAction(t -> itemCopy());
@@ -375,9 +373,7 @@ public class Controller {
 
     private synchronized void setCopyProcessLabel(int value) {
         counter.addAndGet(value);
-        System.out.println(counter.get());
         if (counter.get() > 0) {
-            System.out.println(counter.get());
             copyCountLabel.setText(String.valueOf(counter.get()));
             copyIndicatorLabel.setVisible(true);
             copyCountLabel.setVisible(true);
